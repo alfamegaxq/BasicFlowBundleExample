@@ -1,0 +1,33 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+
+    basic_flow.twig_extension.flow:
+        class: 'BasicFlowBundle\Twig\BasicFlowExtension'
+        public: false
+        calls:
+            - [setContainer, ["@service_container"]]
+            - [setRetainer, ["@basic_flow.retainer.session"]]
+        tags:
+            - { name: twig.extension, priority: 255 }
+
+    basic_flow.intrceptor.step1:
+        class: 'AppBundle\Service\FlowInterceptor\Step1Interceptor'
+        arguments: ["@basic_flow.retainer.session"]
+        tags:
+            - { name: basic_flow.interceptor_service }
+
+    basic_flow.intrceptor.step2:
+        class: 'AppBundle\Service\FlowInterceptor\Step2Interceptor'
+        arguments: ["@basic_flow.retainer.session", "@router"]
+        tags:
+            - { name: basic_flow.interceptor_service }
+
+    basic_flow.intrceptor.step3:
+        class: 'AppBundle\Service\FlowInterceptor\Step3Interceptor'
+        arguments: ["@basic_flow.retainer.session", "@router"]
+        tags:
+            - { name: basic_flow.interceptor_service }

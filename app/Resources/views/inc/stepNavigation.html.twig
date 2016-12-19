@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if previous_flow_page() %}
+        {{ previous_flow_page() }}
+        <a href="{{ previous_flow_page() }}">Prev</a>
+    {% endif %}
+
+    {% if next_flow_page() %}
+        {{ next_flow_page() }}
+        <a href="{{ next_flow_page() }}">Next</a>
+    {% endif %}
+{% endblock %}
